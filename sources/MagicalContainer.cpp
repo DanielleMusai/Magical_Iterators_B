@@ -288,8 +288,6 @@ namespace ariel
     {
         auto iter1 = iterator;
         auto iter2 = other.iterator;
-
-        // Traverse the list to compare the values
         while (iter1 != container.elements.end() && iter2 != other.container.elements.end())
         {
             if (*iter1 > *iter2)
@@ -304,7 +302,6 @@ namespace ariel
             ++iter2;
         }
 
-        // If one iterator reached the end, the other iterator is considered greater
         return (iter1 == container.elements.end() && iter2 != other.container.elements.end());
     }
 
