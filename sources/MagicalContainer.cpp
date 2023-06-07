@@ -124,20 +124,22 @@ namespace ariel
 
     ////////////////////// SideCrossIterator ///////////////////////
 
-  MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container)
-    : container(container)
-{
-    if (container.elements.empty()) {
-        lowIterator = container.elements.end();
-        highIterator = container.elements.end();
-        reverse = false;
-    } else {
-        lowIterator = container.elements.begin();
-        highIterator = std::prev(container.elements.end());
-        reverse = true;
+    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container)
+        : container(container)
+    {
+        if (container.elements.empty())
+        {
+            lowIterator = container.elements.end();
+            highIterator = container.elements.end();
+            reverse = false;
+        }
+        else
+        {
+            lowIterator = container.elements.begin();
+            highIterator = std::prev(container.elements.end());
+            reverse = true;
+        }
     }
-}
-
 
     MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container, std::list<int>::iterator iteratorStart, std::list<int>::iterator iteratorEnd, bool rev) : container(container), lowIterator(iteratorStart), highIterator(iteratorEnd), reverse(rev)
     {
@@ -145,7 +147,7 @@ namespace ariel
 
     bool MagicalContainer::SideCrossIterator::operator==(const SideCrossIterator &other) const
     {
-        
+
         return (this->lowIterator == other.lowIterator) && (this->highIterator == other.highIterator) && (this->reverse == other.reverse);
     }
 
@@ -202,7 +204,7 @@ namespace ariel
         {
             throw std::runtime_error("Iterators are pointing to different containers");
         }
-       
+
         if (this != &other)
         {
             container = other.container;
@@ -215,7 +217,7 @@ namespace ariel
 
     MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin()
     {
-        
+
         if (container.elements.empty())
         {
             return end();

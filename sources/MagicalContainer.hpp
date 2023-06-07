@@ -41,26 +41,27 @@ namespace ariel
             AscendingIterator end() const;
         };
 
-class SideCrossIterator {
-	private:
-		MagicalContainer& container;
-		std::list<int>::iterator lowIterator;
-		std::list<int>::iterator highIterator;
-		bool reverse;
-		
-	public:
-		SideCrossIterator(MagicalContainer &container);
-        SideCrossIterator(MagicalContainer&, std::list<int>::iterator, std::list<int>::iterator, bool);
-		SideCrossIterator& operator++();
-		int operator*();
-		bool operator==(const SideCrossIterator&) const;
-		bool operator!=(const SideCrossIterator&) const;
-		bool operator<(const SideCrossIterator &other) const;
-		bool operator>(const SideCrossIterator &other) const;
-        SideCrossIterator& operator=(const SideCrossIterator& other);
-		SideCrossIterator begin();
-		SideCrossIterator end();
-};
+        class SideCrossIterator
+        {
+        private:
+            MagicalContainer &container;
+            std::list<int>::iterator lowIterator;
+            std::list<int>::iterator highIterator;
+            bool reverse;
+
+        public:
+            SideCrossIterator(MagicalContainer &container);
+            SideCrossIterator(MagicalContainer &, std::list<int>::iterator, std::list<int>::iterator, bool);
+            SideCrossIterator &operator++();
+            int operator*();
+            bool operator==(const SideCrossIterator &) const;
+            bool operator!=(const SideCrossIterator &) const;
+            bool operator<(const SideCrossIterator &other) const;
+            bool operator>(const SideCrossIterator &other) const;
+            SideCrossIterator &operator=(const SideCrossIterator &other);
+            SideCrossIterator begin();
+            SideCrossIterator end();
+        };
 
         class PrimeIterator
         {
@@ -68,6 +69,7 @@ class SideCrossIterator {
             MagicalContainer &container;
             std::list<int>::const_iterator iterator;
             bool isPrime(int num);
+
         public:
             PrimeIterator(MagicalContainer &container);
             PrimeIterator &operator=(const PrimeIterator &other);
