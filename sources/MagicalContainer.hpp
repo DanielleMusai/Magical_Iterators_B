@@ -44,9 +44,9 @@ namespace ariel
 class SideCrossIterator {
 	private:
 		MagicalContainer& container;
-		std::list<int>::iterator currLowIterator;
-		std::list<int>::iterator currHighIterator;
-		bool lowerFlag;
+		std::list<int>::iterator lowIterator;
+		std::list<int>::iterator highIterator;
+		bool reverse;
 		
 	public:
 		SideCrossIterator(MagicalContainer &container);

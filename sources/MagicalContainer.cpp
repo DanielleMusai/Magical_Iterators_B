@@ -128,25 +128,25 @@ namespace ariel
     : container(container)
 {
     if (container.elements.empty()) {
-        currLowIterator = container.elements.end();
-        currHighIterator = container.elements.end();
-        lowerFlag = false;
+        lowIterator = container.elements.end();
+        highIterator = container.elements.end();
+        reverse = false;
     } else {
-        currLowIterator = container.elements.begin();
-        currHighIterator = std::prev(container.elements.end());
-        lowerFlag = true;
+        lowIterator = container.elements.begin();
+        highIterator = std::prev(container.elements.end());
+        reverse = true;
     }
 }
 
 
-    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container, std::list<int>::iterator iteratorStart, std::list<int>::iterator iteratorEnd, bool isLower) : container(container), currLowIterator(iteratorStart), currHighIterator(iteratorEnd), lowerFlag(isLower)
+    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container, std::list<int>::iterator iteratorStart, std::list<int>::iterator iteratorEnd, bool rev) : container(container), lowIterator(iteratorStart), highIterator(iteratorEnd), reverse(rev)
     {
     }
 
     bool MagicalContainer::SideCrossIterator::operator==(const SideCrossIterator &other) const
     {
         
-        return (this->currLowIterator == other.currLowIterator) && (this->currHighIterator == other.currHighIterator) && (this->lowerFlag == other.lowerFlag);
+        return (this->lowIterator == other.lowIterator) && (this->highIterator == other.highIterator) && (this->reverse == other.reverse);
     }
 
     bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &other) const
@@ -157,43 +157,43 @@ namespace ariel
     MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
     {
 
-        if (currLowIterator == container.elements.end())
+        if (lowIterator == container.elements.end())
         {
             throw std::runtime_error("Iterator is already at the end");
         }
-        if (this->currLowIterator == this->currHighIterator)
+        if (this->lowIterator == this->highIterator)
         {
-            this->currLowIterator = this->container.elements.end();
-            this->currHighIterator = this->container.elements.end();
-            this->lowerFlag = false;
+            this->lowIterator = this->container.elements.end();
+            this->highIterator = this->container.elements.end();
+            this->reverse = false;
             return *this;
         }
 
-        if (lowerFlag)
-            ++this->currLowIterator;
+        if (reverse)
+            ++this->lowIterator;
         else
-            --this->currHighIterator;
+            --this->highIterator;
 
-        this->lowerFlag = !this->lowerFlag;
+        this->reverse = !this->reverse;
         return *this;
     }
 
     int MagicalContainer::SideCrossIterator::operator*()
     {
-        if (lowerFlag)
-            return *this->currLowIterator;
+        if (reverse)
+            return *this->lowIterator;
         else
-            return *this->currHighIterator;
+            return *this->highIterator;
     }
 
     bool MagicalContainer::MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const
     {
-        return *currLowIterator < *other.currLowIterator;
+        return *lowIterator < *other.lowIterator;
     }
 
     bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const
     {
-        return *currLowIterator > *other.currLowIterator;
+        return *lowIterator > *other.lowIterator;
     }
 
     MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other)
@@ -206,9 +206,9 @@ namespace ariel
         if (this != &other)
         {
             container = other.container;
-            currLowIterator = other.currLowIterator;
-            currHighIterator = other.currHighIterator;
-            lowerFlag = other.lowerFlag;
+            lowIterator = other.lowIterator;
+            highIterator = other.highIterator;
+            reverse = other.reverse;
         }
         return *this;
     }
