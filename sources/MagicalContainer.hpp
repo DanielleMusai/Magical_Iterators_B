@@ -1,16 +1,18 @@
-#ifndef MAGICALCONTAINER_HPP
-#define MAGICALCONTAINER_HPP
+#ifndef MAGICAL_CONTAINER_HPP
+#define MAGICAL_CONTAINER_HPP
 
-#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <stdexcept>
+#include <list>
+#include <set>
 
 namespace ariel
 {
-
     class MagicalContainer
     {
     private:
-        std::vector<int> elements;       // Original elements in insertion order
-      // std::vector<int> sortedElements; // Sorted copy of elements
+        std::list<int> elements;
 
     public:
         void addElement(int element);
@@ -19,70 +21,66 @@ namespace ariel
         bool getElement(int element) const;
         bool operator<(const MagicalContainer &other) const;
         bool operator>(const MagicalContainer &other) const;
-        class AscendingIterator;
-        class SideCrossIterator;
-        class PrimeIterator;
+
+        class AscendingIterator
+        {
+        private:
+            MagicalContainer &container;
+            std::list<int>::const_iterator iterator;
+
+        public:
+            AscendingIterator(MagicalContainer &container);
+            AscendingIterator &operator=(const AscendingIterator &other);
+            int operator*() const;
+            AscendingIterator &operator++();
+            bool operator==(const AscendingIterator &other) const;
+            bool operator!=(const AscendingIterator &other) const;
+            bool operator<(const AscendingIterator &other) const;
+            bool operator>(const AscendingIterator &other) const;
+            AscendingIterator begin() const;
+            AscendingIterator end() const;
+        };
+
+class SideCrossIterator {
+	private:
+		MagicalContainer& container;
+		std::list<int>::iterator currLowIterator;
+		std::list<int>::iterator currHighIterator;
+		bool lowerFlag;
+		
+	public:
+		SideCrossIterator(MagicalContainer &container);
+        SideCrossIterator(MagicalContainer&, std::list<int>::iterator, std::list<int>::iterator, bool);
+		SideCrossIterator& operator++();
+		int operator*();
+		bool operator==(const SideCrossIterator&) const;
+		bool operator!=(const SideCrossIterator&) const;
+		bool operator<(const SideCrossIterator &other) const;
+		bool operator>(const SideCrossIterator &other) const;
+        SideCrossIterator& operator=(const SideCrossIterator& other);
+		SideCrossIterator begin();
+		SideCrossIterator end();
+};
+
+        class PrimeIterator
+        {
+        private:
+            MagicalContainer &container;
+            std::list<int>::const_iterator iterator;
+            bool isPrime(int num);
+        public:
+            PrimeIterator(MagicalContainer &container);
+            PrimeIterator &operator=(const PrimeIterator &other);
+            int operator*() const;
+            PrimeIterator &operator++();
+            bool operator==(const PrimeIterator &other) const;
+            bool operator!=(const PrimeIterator &other) const;
+            bool operator<(const PrimeIterator &other) const;
+            bool operator>(const PrimeIterator &other) const;
+            PrimeIterator begin() const;
+            PrimeIterator end() const;
+        };
     };
-
-    class MagicalContainer::AscendingIterator
-    {
-    private:
-        const MagicalContainer &container;
-        std::vector<int>::const_iterator iterator;
-
-    public:
-        AscendingIterator(const MagicalContainer &cont);
-        AscendingIterator &operator=(const AscendingIterator &other);
-        int operator*() const;
-        AscendingIterator &operator++();
-        bool operator==(const AscendingIterator &other) const;
-        bool operator!=(const AscendingIterator &other) const;
-        bool operator<(const AscendingIterator &other) const;
-        bool operator>(const AscendingIterator &other) const;
-        AscendingIterator begin() const;
-        AscendingIterator end() const;
-    };
-
-    class MagicalContainer::SideCrossIterator
-    {
-    private:
-        const MagicalContainer &container;
-        std::vector<int>::const_iterator iterator;
-        bool reverse;
-
-    public:
-        SideCrossIterator(const MagicalContainer &cont, bool rev = false);
-        SideCrossIterator &operator=(const SideCrossIterator &other);
-        int operator*() const;
-        SideCrossIterator &operator++();
-        bool operator==(const SideCrossIterator &other) const;
-        bool operator!=(const SideCrossIterator &other) const;
-        bool operator<(const SideCrossIterator &other) const;
-        bool operator>(const SideCrossIterator &other) const;
-        SideCrossIterator begin() const;
-        SideCrossIterator end() const;
-    };
-
-    class MagicalContainer::PrimeIterator
-    {
-    private:
-        const MagicalContainer &container;
-        std::vector<int>::const_iterator iterator;
-        bool isPrime(int num);
-
-    public:
-        PrimeIterator(const MagicalContainer &cont);
-        PrimeIterator &operator=(const PrimeIterator &other);
-        int operator*() const;
-        PrimeIterator &operator++();
-        bool operator==(const PrimeIterator &other) const;
-        bool operator!=(const PrimeIterator &other) const;
-        bool operator<(const PrimeIterator &other) const;
-        bool operator>(const PrimeIterator &other) const;
-        PrimeIterator begin() const;
-        PrimeIterator end() const;
-    };
-
 }
 
-#endif /* MAGICALCONTAINER_HPP */
+#endif /* MAGICAL_CONTAINER_HPP */
